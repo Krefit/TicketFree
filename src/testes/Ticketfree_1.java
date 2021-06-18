@@ -20,6 +20,7 @@ public class Ticketfree_1 {
 	 * 
 	 * 
 	 * */
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//DECLARAÇÃO DE VARIAVEIS de definição do tamanho de cada sessão do teatro
@@ -38,17 +39,18 @@ public class Ticketfree_1 {
 		System.out.println("Obrigado!");
 	}
 
+	//Inicia o programa
 	public static void iniciaPrograma(int qtdPlateiaA, int qtdPlateiaB, int qtdFrisa, int qtdCamarote, int qtdBalcaoNobre) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
-		
+
 		int menu;
 		String matrizPlateiaB[][] = new String[10][10]; //10*10 = 100
 		String matrizPlateiaA[][] = new String[5][5];// 5*5 = 25
 		String matrizPlateiaFrisa[][] = new String[6][5]; //existem 6 plateias Frisa - cada plateia = uma letra
 		String matrizPlateiaCamarote[][] = new String[5][10]; //existem 5 camarotes - cada camarote = uma letra
 		String matrizPlateiaBalcNobre[][] = new String[5][10]; //5*10 = 50
-		
+
 		inicializaAssentos(matrizPlateiaA,"A");
 		inicializaAssentos(matrizPlateiaB,"B");
 		inicializaAssentos(matrizPlateiaCamarote, "CA");
@@ -62,20 +64,47 @@ public class Ticketfree_1 {
 			if (menu == 1){
 				compraIngresso(matrizPlateiaB,matrizPlateiaA,matrizPlateiaFrisa,matrizPlateiaCamarote,matrizPlateiaBalcNobre); //Se escolheu fazer compra, chama função de comprar ingresso
 			}else if (menu == 2) {
-				estatisticaVendas(); // se escolheu mostrar estatisticas, chama função de estatisticas de venda
+				estatisticaVendas(matrizPlateiaB,matrizPlateiaA,matrizPlateiaFrisa,matrizPlateiaCamarote,matrizPlateiaBalcNobre); // se escolheu mostrar estatisticas, chama função de estatisticas de venda
 			}
 		}while (menu < 3); //se escolha for sair, termina o loop e encerra o programa.
 	}
 
-	public static void estatisticaVendas() {
+	//imprime as estatisticas
+	public static void estatisticaVendas(String matrizPlateiaB[][],String matrizPlateiaA[][],String matrizPlateiaFrisa[][],String matrizPlateiaCamarote[][],String matrizPlateiaBalcNobre[][]) {
 		// TODO Auto-generated method stub
+		//String maisVendidos, menosVendidos;
+		int mPBVendidos, mPAVendidos,mPFVendidos, mPCAVendidos, mPBNVendidos;
 		System.out.println("Retorna Estatisticas");
-	}
+		/*		 Qual a peça teve mais ingressos vendidos e menos vendidos;
+		 • Qual sessão teve maior e menor ocupação de poltronas;
+		 • Qual a peça/sessão mais lucrativa e menos lucrativa; 
+		 • Lucro médio do teatro com todas as áreas por peça.
+		 */
+		//Peça com mais ingressos vendidos
+		
+		mPAVendidos = retornaIngressosVendidos(matrizPlateiaA);
+		System.out.println(mPAVendidos+" ingressos vendidos!");
 
+	}
+	
+	public static int retornaIngressosVendidos(String matriz[][]) {
+		int qtdIngressos = 0;
+		for (int i = 0; i < matriz.length; i++) {//letras
+			for (int j = 0; j < matriz[0].length; j++) {//numero
+				if (matriz[i][j] == "X")
+				{
+					qtdIngressos++;
+				}
+			}
+		}
+		return qtdIngressos;
+	}
+	
+	//Faz compra do ingresso
 	public static void compraIngresso(String matrizPlateiaB[][],String matrizPlateiaA[][],String matrizPlateiaFrisa[][],String matrizPlateiaCamarote[][],String matrizPlateiaBalcNobre[][]) {
 		// TODO Auto-generated method stub
 		//criação das matrizes
-		
+
 		Scanner sc = new Scanner(System.in);
 		int sessao, area, menu;
 		float preco=0;
@@ -83,17 +112,19 @@ public class Ticketfree_1 {
 		System.out.println("**********************************************");
 		System.out.println("** Comprando ingresso                       **");
 		System.out.println("** Informe o CPF do cliente:                **");
+		System.out.println("**********************************************");
 		for (int i = 0; i < 7; ++i) System.out.println(); //apenas para "Limpar" a tela
 		cpf = sc.next();
-				
+
 		System.out.println("**************************************************");
 		System.out.println("** Informe qual a sessão desejada pelo cliente: **");
 		System.out.println("**                 1-Matutino                   **");
 		System.out.println("**                 2-Vespertino                 **");
 		System.out.println("**                 3-Noturno                    **");
+		System.out.println("**************************************************");
 		for (int i = 0; i < 5; ++i) System.out.println(); //apenas para "Limpar" a tela
 		sessao = sc.nextInt();
-		
+
 		System.out.println("**************************************************");
 		System.out.println("** Informe a area que o cliente deseja:         **");
 		System.out.println("**                1-Plateia A                   **");
@@ -101,57 +132,73 @@ public class Ticketfree_1 {
 		System.out.println("**                3-Frisa                       **");
 		System.out.println("**                4-Camarote                    **");
 		System.out.println("**                5-Balcão Nobre                **");
+		System.out.println("**************************************************");
 		for (int i = 0; i < 3; ++i) System.out.println(); //apenas para "Limpar" a tela
 		area = sc.nextInt();
-		
-		/*
-		 * 
-		 * 
-		 * !!!FALTA INSERIR ESCOLHER CADEIRA!!!
-		 * 
-		 * 
-		 * */
-				
-		switch (area) {
-			case 1: //Plateia A
-				preco = 40;
-				
 
-				matrizPlateiaA = escolherAssento(matrizPlateiaA);
-				break;
-			case 2: //Plateia B
-				preco = 60;
-				matrizPlateiaB = escolherAssento(matrizPlateiaB);
-				break;
-			case 3: //Frisa
-				preco = 120;
-				matrizPlateiaFrisa = escolherAssento(matrizPlateiaFrisa);
-				break;
-			case 4: //Camarote
-				preco = 80;
-				matrizPlateiaCamarote = escolherAssento(matrizPlateiaCamarote);
-				break;
-			case 5: //Balcão Nobre
-				preco = 250;
-				matrizPlateiaBalcNobre = escolherAssento(matrizPlateiaBalcNobre);
-				break;
-			default:
-				System.out.println("Area não existente");
+		String posicao = "";		
+		switch (area) {
+		case 1: //Plateia A
+			preco = 40;
+			matrizPlateiaA = escolherAssento(matrizPlateiaA);
+			posicao = retornaPosicao(matrizPlateiaA,"A");
+			break;
+		case 2: //Plateia B
+			preco = 60;
+			matrizPlateiaB = escolherAssento(matrizPlateiaB);
+			posicao = retornaPosicao(matrizPlateiaA,"B");
+			break;
+		case 3: //Frisa
+			preco = 120;
+			matrizPlateiaFrisa = escolherAssento(matrizPlateiaFrisa);
+			posicao = retornaPosicao(matrizPlateiaA,"F");
+			break;
+		case 4: //Camarote
+			preco = 80;
+			matrizPlateiaCamarote = escolherAssento(matrizPlateiaCamarote);
+			posicao = retornaPosicao(matrizPlateiaA,"CA");
+			break;
+		case 5: //Balcão Nobre
+			preco = 250;
+			matrizPlateiaBalcNobre = escolherAssento(matrizPlateiaBalcNobre);
+			posicao = retornaPosicao(matrizPlateiaA,"BN");
+			break;
+		default:
+			System.out.println("Area não existente");
 		}
-			
-		
-		imprimeIngresso(cpf,sessao,area,preco);
-		
+
+
+		imprimeIngresso(cpf,sessao,area,preco, posicao);
+
 		System.out.println("** Deseja comprar um novo ingresso? **");
 		System.out.println("**       1 - SIM     |  2 - NÃO     **");
 		menu = sc.nextInt();
-		
+
 		if(menu == 1)
 		{
 			compraIngresso(matrizPlateiaB,matrizPlateiaA,matrizPlateiaFrisa,matrizPlateiaCamarote,matrizPlateiaBalcNobre);
 		}//se não, sai da função.
 	}
-	
+
+	//Retorna a posição que foi compra
+	public static String retornaPosicao(String matriz[][], String Nome)
+	{
+		String posicao = "";
+		int contador = 1;
+		for (int i = 0; i < matriz.length; i++) {//letras
+			for (int j = 0; j < matriz[0].length; j++) {//numero
+				if (matriz[i][j] == "X")
+				{
+					posicao = Nome+contador;
+				}
+				contador++;
+			}
+		}
+
+		return posicao;
+	}
+
+	//Inicia matriz de assentos
 	public static void inicializaAssentos(String matriz[][], String Nome) {
 		int contador=1;
 		for (int i = 0; i < matriz.length; i++) {//letras
@@ -161,7 +208,8 @@ public class Ticketfree_1 {
 			}
 		}
 	}
-	
+
+	//Imprime "imagem" da localização dos assentos ou dos assentos disponíveis
 	public static void imprimeMatriz(String matriz[][])
 	{
 		for (int i = 0; i < matriz.length; i++) {//letras
@@ -171,7 +219,8 @@ public class Ticketfree_1 {
 			System.out.println();
 		}
 	}
-	
+
+	//Escolhe assento
 	public static  String[][] escolherAssento(String matriz[][]) {
 		Scanner sc = new Scanner(System.in);
 		String assento;
@@ -189,13 +238,14 @@ public class Ticketfree_1 {
 		}
 		System.out.println();
 		System.out.println();
-		
+
 		imprimeMatriz(matriz);
 		return matriz;
-		
+
 	}
-	
-	public static void imprimeIngresso(String CPF, int Sessao, int Area, float Preco /*, posicao*/)
+
+	//Imprime informações do ingresso
+	public static void imprimeIngresso(String CPF, int Sessao, int Area, float Preco , String posicao)
 	{
 		System.out.println("**********************************************");
 		System.out.println("**                 Ingresso                 **");
@@ -203,10 +253,11 @@ public class Ticketfree_1 {
 		System.out.println("** Sessao: "+Sessao+"          **");
 		System.out.println("** Area: "+Area+"              **");
 		System.out.println("** Preco: R$"+Preco+"          **");
-		//System.out.println("** Assento: "+posicao+"          **");
+		System.out.println("** Assento: "+posicao+"          **");
 		System.out.println("**********************************************");
 	}
 
+	//Imprime tela de menu
 	public static void chamaMenu() {
 		// TODO Auto-generated method stub
 		System.out.println("************** Ticket Free ****************");
